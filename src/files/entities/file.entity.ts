@@ -7,12 +7,13 @@ export class UserFile {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column('text', {
+    @Column('varchar', {
+        length: 255,
         unique: true
     })
     name: string;
 
-    @Column('text')
+    @Column('varchar')
     img: string;
 
     @Column('boolean', {

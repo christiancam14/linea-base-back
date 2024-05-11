@@ -1,24 +1,25 @@
 import { IsOptional } from "class-validator";
 import { UserFile } from "src/files/entities/file.entity";
-import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Role } from "src/role/entities/role.entity";
+import { BeforeInsert, BeforeUpdate, Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity({name: 'users'})
+@Entity({ name: 'users' })
 export class User {
-    
+
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column('text', {
+    @Column('varchar', {
         unique: true
     })
     email: string;
 
-    @Column('text', {
+    @Column('varchar', {
         select: false
     })
     password: string;
 
-    @Column('text')
+    @Column('varchar')
     fullName: string;
 
     @Column('bool', {
@@ -26,14 +27,15 @@ export class User {
     })
     isActive: boolean;
 
-    @Column('text', {
-        array: true,
-        default: ['user']
+    @Column('varchar', {
+        default: 'user'
     })
-    roles: string[];
-
-    @Column('text')
     profileImg: string;
+
+    @ManyToMany(() => Role)
+    @JoinTable()
+    roles: Role[];
+
 
     @OneToMany(
         () => UserFile,
