@@ -4,14 +4,6 @@ import { IsBase64, IsEmail, IsOptional, IsString, Matches, MaxLength, MinLength 
 export class CreateUserDto {
 
     @ApiProperty({
-        description: 'User email',
-        nullable: false
-    })
-    @IsString()
-    @IsEmail()
-    email: string;
-
-    @ApiProperty({
         description: 'User password',
         nullable: false
     })
@@ -23,15 +15,6 @@ export class CreateUserDto {
         message: 'The password must have a Uppercase, lowercase letter and a number'
     })
     password: string;
-
-    @ApiProperty({
-        description: 'User full name',
-        nullable: false,
-        minLength: 1
-    })
-    @IsString()
-    @MinLength(1)
-    fullName: string;
 
     @IsString()
     @IsBase64()

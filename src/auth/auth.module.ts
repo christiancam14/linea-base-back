@@ -16,13 +16,13 @@ import { JwtModule } from '@nestjs/jwt';
     ConfigModule,
 
     TypeOrmModule.forFeature([User]),
-    
+
     PassportModule.register({
       defaultStrategy: 'jwt'
     }),
 
     JwtModule.registerAsync({
-      
+
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => {
@@ -35,6 +35,12 @@ import { JwtModule } from '@nestjs/jwt';
       }
 
     })
+  ],
+  exports: [
+    TypeOrmModule,
+    JwtStrategy,
+    PassportModule,
+    JwtModule
   ]
 })
 export class AuthModule { }

@@ -1,7 +1,10 @@
-import { BeforeInsert, BeforeUpdate, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { IsOptional } from "class-validator";
+import { UserFile } from "src/files/entities/file.entity";
+import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({name: 'users'})
 export class User {
+    
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
@@ -27,7 +30,19 @@ export class User {
         array: true,
         default: ['user']
     })
-    roles: string[]
+    roles: string[];
+
+    @Column('text')
+    profileImg: string;
+
+    @OneToMany(
+        () => UserFile,
+        (file) => file.user,
+        {
+            eager: true
+        }
+    )
+    file: UserFile[];
 
     @BeforeInsert()
     checkFieldsBeforeInsert() {
